@@ -11,17 +11,25 @@ import AVFoundation
 
 public class Player: UIView {
 
-    private var avPlayerLayer = AVPlayerLayer()
-    private var player = AVPlayer()
-    private var overlayLayer = CALayer()
-    private var imageLayerFrame: CGRect {
-        get {
-            let width: CGFloat = 40.0
-            let height: CGFloat = 44.0
+    public var scrubberHeight: CGFloat = 75.0
 
-            return CGRect(x: bounds.midX - width/2.0, y: bounds.midY - height/2.0, width: width, height: height)
+    private var scrubberView = UIScrollView()
+    private var avPlayerLayer = AVPlayerLayer()
+    private var overlayLayer = CALayer()
+    private var textLayer = CATextLayer()
+
+    private var scrubberViewFrame: CGRect {
+        get {
+            return CGRect(x: 0, y: bounds.midY + scrubberHeight, width: bounds.width, height: scrubberHeight)
         }
     }
+    private var textLayerFrame: CGRect {
+        get {
+            return CGRect(origin: scrubberViewFrame.origin, size: CGSize(width: bounds.width, height: scrubberViewFrame.height))
+        }
+    }
+
+    private var player = AVPlayer()
 
     private var isPlaying = false {
         didSet {
@@ -52,6 +60,8 @@ public class Player: UIView {
 
         avPlayerLayer.frame = bounds
         overlayLayer.frame = bounds
+        scrubberView.frame = scrubberViewFrame
+        textLayer.frame = textLayerFrame
 
     }
 
@@ -63,11 +73,55 @@ private extension Player {
 
     func setup() {
         setupPlayer()
-        createOverlayView()
+        setupPlayerLayer()
+        setupOverlayLayer()
+        setupScrubberView()
+        setupTextLayer()
         addTouchObservers()
     }
 
-    func createOverlayView() {
+    func setupPlayer() {
+        player.addPeriodicTimeObserverForInterval(CMTime(seconds: 1.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { [unowned self] cmtime in
+            let time = Int(CMTimeGetSeconds(cmtime))
+            let minutes = time/60
+            let seconds = time%60
+            self.textLayer.string = NSString(format: "%d:%02d", minutes, seconds) as String
+            self.textLayer.layoutIfNeeded()
+        }
+    }
+
+    func setupPlayerLayer() {
+
+        avPlayerLayer.player = player
+        avPlayerLayer.frame = bounds
+        avPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+
+        layer.addSublayer(avPlayerLayer)
+        
+    }
+
+    func setupScrubberView() {
+
+        scrubberView.frame = scrubberViewFrame
+        scrubberView.backgroundColor = .clearColor()
+        scrubberView.alwaysBounceHorizontal = true
+
+        addSubview(scrubberView)
+
+    }
+
+    func setupTextLayer() {
+
+        textLayer.frame = textLayerFrame
+        textLayer.contentsScale = UIScreen.mainScreen().scale
+        textLayer.alignmentMode = kCAAlignmentCenter
+        textLayer.font = UIFont(name: "Helvetica", size: 8)
+
+        layer.addSublayer(textLayer)
+
+    }
+
+    func setupOverlayLayer() {
 
         overlayLayer.frame = bounds
         overlayLayer.contentsGravity = kCAGravityCenter
@@ -75,16 +129,6 @@ private extension Player {
         overlayLayer.opacity = 0.0
 
         layer.addSublayer(overlayLayer)
-
-    }
-
-    func setupPlayer() {
-
-        avPlayerLayer.player = player
-        avPlayerLayer.frame = bounds
-        avPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-
-        layer.addSublayer(avPlayerLayer)
 
     }
 
@@ -138,12 +182,7 @@ private extension Player {
 
         overlayLayer.opacity = isOverlayVisible ? 0.5 : 0.0
 
-        UIView.animateWithDuration(1.0,
-                                   delay: 0.0, // ineffective as it is a layer animation and so it just goes
-                                   options: .CurveEaseIn,
-                                   animations: { [unowned self] in
-                                    self.layoutIfNeeded()
-            }, completion: nil)
+        layoutIfNeeded()
 
     }
 
