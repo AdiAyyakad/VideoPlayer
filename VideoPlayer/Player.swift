@@ -13,15 +13,22 @@ public class Player: UIView {
 
     private var avPlayerLayer = AVPlayerLayer()
     private var player = AVPlayer()
-    private var overlayView = UIView()
-    private var isPlaying = false
-    private var isOverlayVisible = false {
-        didSet {
-            if !isOverlayVisible {
-                sleep(2)
-            }
+    private var overlayLayer = CALayer()
+    private var imageLayerFrame: CGRect {
+        get {
+            let width: CGFloat = 40.0
+            let height: CGFloat = 44.0
+
+            return CGRect(x: bounds.midX - width/2.0, y: bounds.midY - height/2.0, width: width, height: height)
         }
     }
+
+    private var isPlaying = false {
+        didSet {
+            overlayLayer.contents = UIImage(named: isPlaying ? "pause" : "play")?.CGImage
+        }
+    }
+    private var isOverlayVisible = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,15 +49,17 @@ public class Player: UIView {
     }
 
     public override func layoutSubviews() {
+
         avPlayerLayer.frame = bounds
-        overlayView.frame = bounds
+        overlayLayer.frame = bounds
+
     }
 
 }
 
-// MARK: - Public Setup
+// MARK: - Private Setup
 
-public extension Player {
+private extension Player {
 
     func setup() {
         setupPlayer()
@@ -60,84 +69,82 @@ public extension Player {
 
     func createOverlayView() {
 
-        overlayView = UIView(frame: bounds)
-        overlayView.backgroundColor = .lightGrayColor()
-        overlayView.layer.opacity = 0.5
+        overlayLayer.frame = bounds
+        overlayLayer.contentsGravity = kCAGravityCenter
+        overlayLayer.backgroundColor = UIColor.lightGrayColor().CGColor
+        overlayLayer.opacity = 0.0
 
-        overlayView.addSubview(UIImageView(frame: overlayView.bounds))
-        addSubview(overlayView)
-        sendSubviewToBack(overlayView)
+        layer.addSublayer(overlayLayer)
 
     }
 
     func setupPlayer() {
+
         avPlayerLayer.player = player
         avPlayerLayer.frame = bounds
         avPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
 
         layer.addSublayer(avPlayerLayer)
+
     }
 
     func addTouchObservers() {
 
-        overlayView.addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(didTapOverlay)) )
-
+        addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(didTapOverlay)) )
+        
     }
+
+}
+
+// MARK: - Public Setup
+
+public extension Player {
 
     func setupContentURL(url: NSURL) {
+
         player.replaceCurrentItemWithPlayerItem(AVPlayerItem(URL: url))
-    }
 
-    func showImage(named: String) {
-        var imageView: UIImageView? = nil
-
-        for subview in overlayView.subviews {
-            if let imageSubview = subview as? UIImageView {
-                imageView = imageSubview
-            }
-        }
-
-        if imageView == nil {
-            print("Error in addImage")
-            return
-        }
-
-        imageView?.image = UIImage(named: named)
     }
 
 }
 
 // MARK: - Private actions
 
-extension Player {
+private extension Player {
 
     // Executes play/pause
-    func didTapOverlay() {
+    @objc func didTapOverlay() {
 
-        print("Tapped overlay view")
         isPlaying ? pause() : play()
-        isPlaying ? showImage("pause") : showImage("play")
-        isOverlayVisible ? sendSubviewToBack(overlayView) : bringSubviewToFront(overlayView)
+        isOverlayVisible = !isOverlayVisible
+
+        if !isOverlayVisible {
+            // Delay overlay disppear for 3 seconds
+            performSelector(#selector(animateOverlay), withObject: nil, afterDelay: 3.0)
+        } else {
+            // Do no delay to make overlay appear
+            animateOverlay()
+        }
 
     }
 
-    override public func sendSubviewToBack(view: UIView) {
+}
 
-        if view == overlayView {
-            isOverlayVisible = false
-        }
+// MARK: - Private Animations
 
-        super.sendSubviewToBack(view)
+private extension Player {
 
-    }
+    @objc func animateOverlay() {
 
-    override public func bringSubviewToFront(view: UIView) {
+        overlayLayer.opacity = isOverlayVisible ? 0.5 : 0.0
 
-        if view == overlayView {
-            isOverlayVisible = true
-        }
+        UIView.animateWithDuration(1.0,
+                                   delay: 0.0, // ineffective as it is a layer animation and so it just goes
+                                   options: .CurveEaseIn,
+                                   animations: { [unowned self] in
+                                    self.layoutIfNeeded()
+            }, completion: nil)
 
-        super.bringSubviewToFront(view)
     }
 
 }
@@ -147,6 +154,11 @@ extension Player {
 public extension Player {
 
     func play() {
+
+        if player.currentTime() == player.currentItem?.duration {
+            player.seekToTime(CMTime(seconds: 0, preferredTimescale: 1))
+        }
+
         isPlaying = true
         player.play()
     }
