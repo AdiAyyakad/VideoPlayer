@@ -119,8 +119,8 @@ private extension Player {
         isOverlayVisible = !isOverlayVisible
 
         if !isOverlayVisible {
-            // Delay overlay disppear for 3 seconds
-            performSelector(#selector(animateOverlay), withObject: nil, afterDelay: 3.0)
+            // Delay overlay disppear for 2 seconds
+            performSelector(#selector(animateOverlay), withObject: nil, afterDelay: 2.0)
         } else {
             // Do no delay to make overlay appear
             animateOverlay()
