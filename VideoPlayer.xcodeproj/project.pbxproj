@@ -405,6 +405,7 @@
 				0362AF1A1D397C5F00B23816 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0362AF1B1D397C5F00B23816 /* Build configuration list for PBXNativeTarget "VideoPlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +414,7 @@
 				0362AF1D1D397C5F00B23816 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

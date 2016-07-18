@@ -203,8 +203,10 @@ public extension Player {
     }
 
     func pause() {
+
         isPlaying = false
         player.pause()
+
     }
 
 }
