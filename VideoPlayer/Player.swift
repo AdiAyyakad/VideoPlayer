@@ -14,6 +14,14 @@ public class Player: UIView {
     private var avPlayerLayer = AVPlayerLayer()
     private var player = AVPlayer()
     private var overlayView = UIView()
+    private var isPlaying = false
+    private var isOverlayVisible = false {
+        didSet {
+            if !isOverlayVisible {
+                sleep(2)
+            }
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,6 +64,10 @@ public extension Player {
         overlayView.backgroundColor = .lightGrayColor()
         overlayView.layer.opacity = 0.5
 
+        overlayView.addSubview(UIImageView(frame: overlayView.bounds))
+        addSubview(overlayView)
+        sendSubviewToBack(overlayView)
+
     }
 
     func setupPlayer() {
@@ -68,13 +80,29 @@ public extension Player {
 
     func addTouchObservers() {
 
-        let singleFingerTap = UIGestureRecognizer(target: self, action: #selector(didTouchUpInsideView))
+        overlayView.addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(didTapOverlay)) )
 
     }
 
     func setupContentURL(url: NSURL) {
         player.replaceCurrentItemWithPlayerItem(AVPlayerItem(URL: url))
-        play()
+    }
+
+    func showImage(named: String) {
+        var imageView: UIImageView? = nil
+
+        for subview in overlayView.subviews {
+            if let imageSubview = subview as? UIImageView {
+                imageView = imageSubview
+            }
+        }
+
+        if imageView == nil {
+            print("Error in addImage")
+            return
+        }
+
+        imageView?.image = UIImage(named: named)
     }
 
 }
@@ -83,8 +111,33 @@ public extension Player {
 
 extension Player {
 
-    func didTouchUpInsideView() {
+    // Executes play/pause
+    func didTapOverlay() {
 
+        print("Tapped overlay view")
+        isPlaying ? pause() : play()
+        isPlaying ? showImage("pause") : showImage("play")
+        isOverlayVisible ? sendSubviewToBack(overlayView) : bringSubviewToFront(overlayView)
+
+    }
+
+    override public func sendSubviewToBack(view: UIView) {
+
+        if view == overlayView {
+            isOverlayVisible = false
+        }
+
+        super.sendSubviewToBack(view)
+
+    }
+
+    override public func bringSubviewToFront(view: UIView) {
+
+        if view == overlayView {
+            isOverlayVisible = true
+        }
+
+        super.bringSubviewToFront(view)
     }
 
 }
@@ -94,10 +147,12 @@ extension Player {
 public extension Player {
 
     func play() {
+        isPlaying = true
         player.play()
     }
 
     func pause() {
+        isPlaying = false
         player.pause()
     }
 
