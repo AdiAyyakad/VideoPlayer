@@ -13,29 +13,21 @@ public class Player: UIView {
 
     public var scrubberHeight: CGFloat = 75.0
 
-    private var scrubberView = UIScrollView()
+    private var playPauseImageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
     private var avPlayerLayer = AVPlayerLayer()
-    private var overlayLayer = CALayer()
-    private var textLayer = CATextLayer()
+    private var overlayView = OverlayView()
+    private var textLabel = UILabel()
 
     private var scrubberViewFrame: CGRect {
-        get {
-            return CGRect(x: 0, y: bounds.midY + scrubberHeight, width: bounds.width, height: scrubberHeight)
-        }
+        return CGRect(x: 0, y: bounds.midY + scrubberHeight, width: bounds.width, height: scrubberHeight)
     }
-    private var textLayerFrame: CGRect {
-        get {
-            return CGRect(origin: scrubberViewFrame.origin, size: CGSize(width: bounds.width, height: scrubberViewFrame.height))
-        }
+    private var textLabelFrame: CGRect {
+        return CGRect(origin: scrubberViewFrame.origin, size: CGSize(width: bounds.width, height: scrubberViewFrame.height))
     }
 
     private var player = AVPlayer()
 
-    private var isPlaying = false {
-        didSet {
-            overlayLayer.contents = UIImage(named: isPlaying ? "pause" : "play")?.CGImage
-        }
-    }
+    private var isPlaying = false
     private var isOverlayVisible = false
 
     override init(frame: CGRect) {
@@ -55,13 +47,17 @@ public class Player: UIView {
 
         setup()
     }
+}
 
-    public override func layoutSubviews() {
+// MARK: - Overrides
+
+public extension Player {
+
+    override func layoutSubviews() {
 
         avPlayerLayer.frame = bounds
-        overlayLayer.frame = bounds
-        scrubberView.frame = scrubberViewFrame
-        textLayer.frame = textLayerFrame
+        overlayView.frame = bounds
+        textLabel.frame = textLabelFrame
 
     }
 
@@ -74,9 +70,8 @@ private extension Player {
     func setup() {
         setupPlayer()
         setupPlayerLayer()
-        setupOverlayLayer()
-        setupScrubberView()
-        setupTextLayer()
+        setupOverlayView()
+        setupTextLabel()
         addTouchObservers()
     }
 
@@ -85,8 +80,7 @@ private extension Player {
             let time = Int(CMTimeGetSeconds(cmtime))
             let minutes = time/60
             let seconds = time%60
-            self.textLayer.string = NSString(format: "%d:%02d", minutes, seconds) as String
-            self.textLayer.layoutIfNeeded()
+            self.textLabel.text = String(format: "%d:%02d", minutes, seconds)
         }
     }
 
@@ -100,42 +94,56 @@ private extension Player {
         
     }
 
-    func setupScrubberView() {
+    func setupTextLabel() {
 
-        scrubberView.frame = scrubberViewFrame
-        scrubberView.backgroundColor = .clearColor()
-        scrubberView.alwaysBounceHorizontal = true
+        textLabel.frame = textLabelFrame
+        textLabel.textAlignment = .Center
+        textLabel.font = .systemFontOfSize(20)
+        textLabel.textColor = .whiteColor()
 
-        addSubview(scrubberView)
-
-    }
-
-    func setupTextLayer() {
-
-        textLayer.frame = textLayerFrame
-        textLayer.contentsScale = UIScreen.mainScreen().scale
-        textLayer.alignmentMode = kCAAlignmentCenter
-        textLayer.font = UIFont(name: "Helvetica", size: 8)
-
-        layer.addSublayer(textLayer)
+        addSubview(textLabel)
 
     }
 
-    func setupOverlayLayer() {
+    func setupOverlayView() {
 
-        overlayLayer.frame = bounds
-        overlayLayer.contentsGravity = kCAGravityCenter
-        overlayLayer.backgroundColor = UIColor.lightGrayColor().CGColor
-        overlayLayer.opacity = 0.0
+        overlayView.frame = bounds
+        overlayView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.3)
+        overlayView.hidden = true
 
-        layer.addSublayer(overlayLayer)
+        setupImageView()
 
+        addSubview(overlayView)
+
+    }
+
+    func setupImageView() {
+
+        playPauseImageView.tintColor = .whiteColor()
+        getImage()
+
+        playPauseImageView.center = CGPoint(x: overlayView.bounds.midX, y: overlayView.bounds.midY)
+        playPauseImageView.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
+        playPauseImageView.hidden = true
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didPressPlayPause))
+        playPauseImageView.userInteractionEnabled = true
+        playPauseImageView.addGestureRecognizer(tapGestureRecognizer)
+
+        addSubview(playPauseImageView)
+        
     }
 
     func addTouchObservers() {
 
         addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(didTapOverlay)) )
         
+    }
+
+    func getImage() {
+
+        playPauseImageView.image = UIImage(assetIdentifier: isPlaying ? .Pause : .Play)?.imageWithRenderingMode(.AlwaysTemplate)
+
     }
 
 }
@@ -156,20 +164,23 @@ public extension Player {
 
 private extension Player {
 
-    // Executes play/pause
+    /**
+     Makes overlay visible, then invisible automatically after 3 seconds
+     */
     @objc func didTapOverlay() {
 
+        isOverlayVisible = true
+        animateOverlay()
+        animateOverlayDisappearance()
+
+    }
+
+    /**
+     Plays or pauses the video, depending on the current state
+    */
+    @objc func didPressPlayPause() {
         isPlaying ? pause() : play()
-        isOverlayVisible = !isOverlayVisible
-
-        if !isOverlayVisible {
-            // Delay overlay disppear for 2 seconds
-            performSelector(#selector(animateOverlay), withObject: nil, afterDelay: 2.0)
-        } else {
-            // Do no delay to make overlay appear
-            animateOverlay()
-        }
-
+        animateOverlayDisappearance()
     }
 
 }
@@ -180,10 +191,16 @@ private extension Player {
 
     @objc func animateOverlay() {
 
-        overlayLayer.opacity = isOverlayVisible ? 0.5 : 0.0
+        playPauseImageView.hidden = isOverlayVisible
+        overlayView.hidden = !isOverlayVisible
+        playPauseImageView.hidden = !isOverlayVisible
+        isOverlayVisible = false
 
-        layoutIfNeeded()
+    }
 
+    func animateOverlayDisappearance() {
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlay), object: nil)
+        performSelector(#selector(animateOverlay), withObject: nil, afterDelay: 3.0)
     }
 
 }
@@ -199,12 +216,14 @@ public extension Player {
         }
 
         isPlaying = true
+        getImage()
         player.play()
     }
 
     func pause() {
 
         isPlaying = false
+        getImage()
         player.pause()
 
     }

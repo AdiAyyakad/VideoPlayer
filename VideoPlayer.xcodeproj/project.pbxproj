@@ -15,6 +15,8 @@
 		0362AF141D397C5F00B23816 /* VideoPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362AF131D397C5F00B23816 /* VideoPlayerTests.swift */; };
 		0362AF1F1D397D3A00B23816 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362AF1E1D397D3A00B23816 /* Player.swift */; };
 		0362AF211D399C9900B23816 /* SmallRocky.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0362AF201D3999D900B23816 /* SmallRocky.mp4 */; };
+		03795B501D4B8E6200B17535 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03795B4F1D4B8E6200B17535 /* UIImageExtension.swift */; };
+		03795B521D4B9CA300B17535 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03795B511D4B9CA300B17535 /* OverlayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		0362AF151D397C5F00B23816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0362AF1E1D397D3A00B23816 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		0362AF201D3999D900B23816 /* SmallRocky.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SmallRocky.mp4; sourceTree = "<group>"; };
+		03795B4F1D4B8E6200B17535 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		03795B511D4B9CA300B17535 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,8 @@
 				0362AEFE1D397C5F00B23816 /* AppDelegate.swift */,
 				0362AF001D397C5F00B23816 /* ViewController.swift */,
 				0362AF1E1D397D3A00B23816 /* Player.swift */,
+				03795B511D4B9CA300B17535 /* OverlayView.swift */,
+				03795B4F1D4B8E6200B17535 /* UIImageExtension.swift */,
 				0362AF021D397C5F00B23816 /* Main.storyboard */,
 				0362AF051D397C5F00B23816 /* Assets.xcassets */,
 				0362AF071D397C5F00B23816 /* LaunchScreen.storyboard */,
@@ -208,6 +214,8 @@
 				0362AF011D397C5F00B23816 /* ViewController.swift in Sources */,
 				0362AF1F1D397D3A00B23816 /* Player.swift in Sources */,
 				0362AEFF1D397C5F00B23816 /* AppDelegate.swift in Sources */,
+				03795B501D4B8E6200B17535 /* UIImageExtension.swift in Sources */,
+				03795B521D4B9CA300B17535 /* OverlayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
