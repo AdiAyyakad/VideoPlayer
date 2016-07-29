@@ -13,18 +13,9 @@ public class Player: UIView {
 
     private var avPlayerLayer = AVPlayerLayer()
     private var overlayView = OverlayView()
-    private var playPauseImageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
-    private var textLabel = UILabel()
-
-    private var textLabelFrame: CGRect {
-        return CGRect(origin: .zero, size: CGSize(width: bounds.width, height: 75))
-    }
-
     private var player = AVPlayer()
-    private var isPlaying = false
 
-    private let largeFont: UIFont = .systemFontOfSize(20)
-    private let smallFont: UIFont = .systemFontOfSize(30)
+    private var isPlaying = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,7 +44,6 @@ public extension Player {
 
         avPlayerLayer.frame = bounds
         overlayView.frame = bounds
-        textLabel.frame = textLabelFrame
 
     }
 
@@ -76,7 +66,7 @@ private extension Player {
             let time = Int(CMTimeGetSeconds(cmtime))
             let minutes = time/60
             let seconds = time%60
-            self.textLabel.text = String(format: "%d:%02d", minutes, seconds)
+            self.overlayView.textLabel.text = String(format: "%d:%02d", minutes, seconds)
         }
 
     }
@@ -104,42 +94,12 @@ private extension Player {
 
     func setupOverlayView() {
 
-        overlayView.frame = bounds
         overlayView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.3)
-        overlayView.hidden = true
-
-        setupImageView()
-        setupTextLabel()
+        overlayView.hide()
+        overlayView.playPauseButton.addTarget(self, action: #selector(didPressPlayPause), forControlEvents: .TouchUpInside)
 
         addSubview(overlayView)
 
-    }
-
-    func setupImageView() {
-
-        playPauseImageView.tintColor = .whiteColor()
-        playPauseImageView.image = UIImage(assetIdentifier: .Play)?.imageWithRenderingMode(.AlwaysTemplate)
-
-        playPauseImageView.center = CGPoint(x: overlayView.bounds.midX, y: overlayView.bounds.midY)
-        playPauseImageView.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
-
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didPressPlayPause))
-        playPauseImageView.userInteractionEnabled = true
-        playPauseImageView.addGestureRecognizer(tapGestureRecognizer)
-
-        overlayView.addSubview(playPauseImageView)
-        
-    }
-
-    func setupTextLabel() {
-
-        textLabel.frame = textLabelFrame
-        textLabel.textAlignment = .Center
-        textLabel.font = smallFont
-        textLabel.textColor = .whiteColor()
-
-        overlayView.addSubview(textLabel)
-        
     }
 
 }
@@ -184,9 +144,7 @@ private extension Player {
     /** Shows overlay */
     func animateOverlay() {
 
-        overlayView.hidden = false
-        textLabel.font = largeFont
-
+        overlayView.show()
         delayOverlayDisappearance()
 
     }
@@ -194,8 +152,7 @@ private extension Player {
     /** Makes overlay disappear */
     @objc func animateOverlayDisappearance() {
 
-        overlayView.hidden = true
-        textLabel.font = smallFont
+        overlayView.hide()
 
     }
 
@@ -220,14 +177,14 @@ public extension Player {
         }
 
         isPlaying = true
-        playPauseImageView.image = UIImage(assetIdentifier: .Pause)?.imageWithRenderingMode(.AlwaysTemplate)
+        overlayView.changeImage(UIImage(assetIdentifier: .Pause))
         player.play()
     }
 
     func pause() {
 
         isPlaying = false
-        playPauseImageView.image = UIImage(assetIdentifier: .Play)?.imageWithRenderingMode(.AlwaysTemplate)
+        overlayView.changeImage(UIImage(assetIdentifier: .Play))
         player.pause()
 
     }
