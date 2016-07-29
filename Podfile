@@ -6,7 +6,6 @@ target 'VideoPlayer' do
   use_frameworks!
 
   # Pods for VideoPlayer
-  pod 'FDWaveformView'
 
   target 'VideoPlayerTests' do
     inherit! :search_paths

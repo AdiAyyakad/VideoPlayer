@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>FDWaveformView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-VideoPlayer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>21E154417075D2644AEADB991F8ED343</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>54BD5681A13F68FEE5F5D04D456B947F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF9C6ED4B1A422C1575E3FA500083FD4</key>
+		<key>ED70DDA7188CA888B1DB41337E438752</key>
 		<dict>
 			<key>primary</key>
 			<true/>

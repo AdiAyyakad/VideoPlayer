@@ -12,7 +12,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var player: Player!
+    @IBOutlet weak var player: PlayerView!
 
     var url: NSURL!
 
@@ -30,7 +30,7 @@ extension ViewController {
 
     func setupPlayer() {
         url = NSBundle.mainBundle().URLForResource("SmallRocky", withExtension: "mp4")
-        player.setupContentURL(url)
+        player.addContentURL(url)
         player.play()
     }
 
