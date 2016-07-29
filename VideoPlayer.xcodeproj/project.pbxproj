@@ -17,6 +17,7 @@
 		0362AF211D399C9900B23816 /* SmallRocky.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0362AF201D3999D900B23816 /* SmallRocky.mp4 */; };
 		03795B501D4B8E6200B17535 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03795B4F1D4B8E6200B17535 /* UIImageExtension.swift */; };
 		03795B521D4B9CA300B17535 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03795B511D4B9CA300B17535 /* OverlayView.swift */; };
+		0395238A1D4BE072000FC35E /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039523891D4BE072000FC35E /* WaveformView.swift */; };
 		0ECA75AF47A5DE86BCCE9198 /* Pods_VideoPlayerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E462F170DC1102CD59A9DB3 /* Pods_VideoPlayerTests.framework */; };
 		C27696EE58B3D8B453A83388 /* Pods_VideoPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39C14F7E29BB31721CB7AF3 /* Pods_VideoPlayer.framework */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		0362AF201D3999D900B23816 /* SmallRocky.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = SmallRocky.mp4; sourceTree = "<group>"; };
 		03795B4F1D4B8E6200B17535 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		03795B511D4B9CA300B17535 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		039523891D4BE072000FC35E /* WaveformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		25DBEBBEC2F8B8E37F1C0DE5 /* Pods-VideoPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		2E462F170DC1102CD59A9DB3 /* Pods_VideoPlayerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CFF46E2AA46FAD80413591 /* Pods-VideoPlayerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoPlayerTests/Pods-VideoPlayerTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			children = (
 				0362AF1E1D397D3A00B23816 /* Player.swift */,
 				03795B511D4B9CA300B17535 /* OverlayView.swift */,
+				039523891D4BE072000FC35E /* WaveformView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				0362AEFF1D397C5F00B23816 /* AppDelegate.swift in Sources */,
 				03795B501D4B8E6200B17535 /* UIImageExtension.swift in Sources */,
 				03795B521D4B9CA300B17535 /* OverlayView.swift in Sources */,
+				0395238A1D4BE072000FC35E /* WaveformView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,9 +15,17 @@ public class Player: UIView {
     private var avPlayerLayer = AVPlayerLayer()
     private var overlayView = OverlayView()
     private var player = AVPlayer()
+    private var waveformView = WaveformView()
 
     private var isPlaying = false
     private let panGestureRecognizer = UIPanGestureRecognizer()
+
+    private let waveformHeight: CGFloat = 40
+    private var waveformFrame: CGRect {
+        return CGRect(x: 0, y: bounds.maxY-waveformHeight, width: bounds.width, height: waveformHeight)
+    }
+
+    // MARK: - Initializers
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,6 +67,7 @@ private extension Player {
         setupPlayer()
         setupPlayerLayer()
         setupOverlayView()
+        setupWaveformView()
         addTouchObservers()
     }
 
@@ -67,6 +76,12 @@ private extension Player {
         player.addPeriodicTimeObserverForInterval(CMTime(seconds: 1.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { [unowned self] cmtime in
             let time = Int(CMTimeGetSeconds(cmtime))
             self.overlayView.textLabel.text = String(format: "%d:%02d", time/60, time%60)
+
+            guard let item = self.player.currentItem else {
+                return
+            }
+
+            self.waveformView.updateProgress(CMTimeGetSeconds(cmtime)/CMTimeGetSeconds(item.duration))
         }
 
     }
@@ -90,11 +105,6 @@ private extension Player {
         addGestureRecognizer(panGestureRecognizer)
 
     }
-}
-
-// MARK: - Private Overlay Setup
-
-private extension Player {
 
     func setupOverlayView() {
 
@@ -103,6 +113,13 @@ private extension Player {
         overlayView.playPauseButton.addTarget(self, action: #selector(didPressPlayPause), forControlEvents: .TouchUpInside)
 
         addSubview(overlayView)
+
+    }
+
+    func setupWaveformView() {
+
+        waveformView.frame = waveformFrame
+        overlayView.addSubview(waveformView)
 
     }
 
@@ -140,9 +157,9 @@ private extension Player {
 
         if isPlaying {
             pause()
+            NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlayDisappearance), object: nil)
         }
 
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlayDisappearance), object: nil)
         let length = CMTimeGetSeconds(item.duration)
         let percentMoved = Double(recognizer.locationInView(self).x/bounds.width)
 
@@ -153,10 +170,9 @@ private extension Player {
         } else if seconds > length {
             seconds = length
         }
-
-        NSLog("percent: \(percentMoved), seconds: \(seconds)")
-
         overlayView.textLabel.text = String(format: "%d:%02d", Int(seconds)/60, Int(seconds)%60)
+        waveformView.updateProgress(percentMoved)
+
         player.seekToTime(CMTime(seconds: seconds, preferredTimescale: Int32(NSEC_PER_SEC)))
 
         if recognizer.state == .Ended {
