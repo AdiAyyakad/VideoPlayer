@@ -74,6 +74,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		034B48191D4BD11300AF46F5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0362AF1E1D397D3A00B23816 /* Player.swift */,
+				03795B511D4B9CA300B17535 /* OverlayView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		034B481A1D4BD11900AF46F5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0362AF001D397C5F00B23816 /* ViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		034B481B1D4BD12200AF46F5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				03795B4F1D4B8E6200B17535 /* UIImageExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		034B481C1D4BD12C00AF46F5 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				0362AF021D397C5F00B23816 /* Main.storyboard */,
+				0362AF071D397C5F00B23816 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		034B481D1D4BD13800AF46F5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0362AF051D397C5F00B23816 /* Assets.xcassets */,
+				0362AF0A1D397C5F00B23816 /* Info.plist */,
+				0362AF201D3999D900B23816 /* SmallRocky.mp4 */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		0362AEF21D397C5F00B23816 = {
 			isa = PBXGroup;
 			children = (
@@ -98,15 +142,11 @@
 			isa = PBXGroup;
 			children = (
 				0362AEFE1D397C5F00B23816 /* AppDelegate.swift */,
-				0362AF001D397C5F00B23816 /* ViewController.swift */,
-				0362AF1E1D397D3A00B23816 /* Player.swift */,
-				03795B511D4B9CA300B17535 /* OverlayView.swift */,
-				03795B4F1D4B8E6200B17535 /* UIImageExtension.swift */,
-				0362AF021D397C5F00B23816 /* Main.storyboard */,
-				0362AF051D397C5F00B23816 /* Assets.xcassets */,
-				0362AF071D397C5F00B23816 /* LaunchScreen.storyboard */,
-				0362AF0A1D397C5F00B23816 /* Info.plist */,
-				0362AF201D3999D900B23816 /* SmallRocky.mp4 */,
+				034B481C1D4BD12C00AF46F5 /* Storyboards */,
+				034B48191D4BD11300AF46F5 /* Views */,
+				034B481A1D4BD11900AF46F5 /* ViewControllers */,
+				034B481B1D4BD12200AF46F5 /* Extensions */,
+				034B481D1D4BD13800AF46F5 /* Resources */,
 			);
 			path = VideoPlayer;
 			sourceTree = "<group>";

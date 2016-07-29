@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import FDWaveformView
 
 public class Player: UIView {
 
@@ -111,6 +112,7 @@ public extension Player {
     func setupContentURL(url: NSURL) {
 
         player.replaceCurrentItemWithPlayerItem(AVPlayerItem(URL: url))
+        overlayView.setupAudioURL(audioURL: url)
 
     }
 
@@ -187,6 +189,22 @@ public extension Player {
         overlayView.changeImage(UIImage(assetIdentifier: .Play))
         player.pause()
 
+    }
+
+}
+
+// MARK: - FDWaveformViewDelegate
+
+extension Player: FDWaveformViewDelegate {
+
+    public func waveformDidBeginPanning(waveformView: FDWaveformView!) {
+        print("Began panning")
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlayDisappearance), object: nil)
+    }
+
+    public func waveformDidEndPanning(waveformView: FDWaveformView!) {
+        print("Ended panning")
+        performSelector(#selector(animateOverlayDisappearance), withObject: nil, afterDelay: 3.0)
     }
 
 }

@@ -7,14 +7,22 @@
 //
 
 import UIKit
+import FDWaveformView
 
 class OverlayView: UIView {
 
     var playPauseButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
     var textLabel = UILabel()
+    var scrubberView = FDWaveformView()
 
+    private let scrubberHeight: CGFloat = 80
     private let font: UIFont = .systemFontOfSize(30)
-    private var textLabelFrame: CGRect { return CGRect(origin: .zero, size: CGSize(width: bounds.width, height: 75)) }
+    private var textLabelFrame: CGRect {
+        return CGRect(origin: .zero, size: CGSize(width: bounds.width, height: scrubberHeight/2))
+    }
+    private var scrubberFrame: CGRect {
+        return CGRect(x: 0, y: bounds.maxY-scrubberHeight, width: bounds.width, height: scrubberHeight)
+    }
 
     init() {
         super.init(frame: .zero)
@@ -26,19 +34,28 @@ class OverlayView: UIView {
         fatalError("initWithCoder not implemented")
     }
 
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-        for subview in subviews {
-            // if the subview is not hidden and the point is inside the subview, then pass on the point
-            if !subview.hidden && subview.pointInside(convertPoint(point, toView: subview), withEvent: event) {
-                return true
-            }
-        }
-        return false
+    override func layoutSubviews() {
+
+        textLabel.frame = textLabelFrame
+        scrubberView.frame = scrubberFrame
+        
     }
 
 }
 
 // MARK: - Setup
+
+extension OverlayView {
+
+    func setupAudioURL(audioURL url: NSURL) {
+
+        scrubberView.audioURL = url
+
+    }
+
+}
+
+// MARK: - Private Setup
 
 private extension OverlayView {
 
@@ -49,6 +66,7 @@ private extension OverlayView {
 
         setupImageView()
         setupTextLabel()
+        setupScrubberView()
 
     }
 
@@ -72,10 +90,23 @@ private extension OverlayView {
         textLabel.textAlignment = .Center
         textLabel.font = font
         textLabel.textColor = .whiteColor()
-        textLabel.text = "Not Set"
         
         addSubview(textLabel)
         
+    }
+
+    func setupScrubberView() {
+
+        scrubberView.doesAllowStretch = false
+        scrubberView.doesAllowScroll = true
+        scrubberView.doesAllowScrubbing = true
+
+        if let sv = superview as? Player {
+            scrubberView.delegate = sv
+        }
+
+        addSubview(scrubberView)
+
     }
 
 }
