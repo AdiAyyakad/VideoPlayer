@@ -11,24 +11,20 @@ import AVFoundation
 
 public class Player: UIView {
 
-    public var scrubberHeight: CGFloat = 75.0
-
-    private var playPauseImageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
     private var avPlayerLayer = AVPlayerLayer()
     private var overlayView = OverlayView()
+    private var playPauseImageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
     private var textLabel = UILabel()
 
-    private var scrubberViewFrame: CGRect {
-        return CGRect(x: 0, y: bounds.midY + scrubberHeight, width: bounds.width, height: scrubberHeight)
-    }
     private var textLabelFrame: CGRect {
-        return CGRect(origin: scrubberViewFrame.origin, size: CGSize(width: bounds.width, height: scrubberViewFrame.height))
+        return CGRect(origin: .zero, size: CGSize(width: bounds.width, height: 75))
     }
 
     private var player = AVPlayer()
-
     private var isPlaying = false
-    private var isOverlayVisible = false
+
+    private let largeFont: UIFont = .systemFontOfSize(20)
+    private let smallFont: UIFont = .systemFontOfSize(30)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,7 +67,6 @@ private extension Player {
         setupPlayer()
         setupPlayerLayer()
         setupOverlayView()
-        setupTextLabel()
         addTouchObservers()
     }
 
@@ -94,16 +89,16 @@ private extension Player {
         
     }
 
-    func setupTextLabel() {
+    func addTouchObservers() {
 
-        textLabel.frame = textLabelFrame
-        textLabel.textAlignment = .Center
-        textLabel.font = .systemFontOfSize(20)
-        textLabel.textColor = .whiteColor()
-
-        addSubview(textLabel)
+        addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(didTapOverlay)) )
 
     }
+}
+
+// MARK: - Private Overlay Setup
+
+private extension Player {
 
     func setupOverlayView() {
 
@@ -112,6 +107,7 @@ private extension Player {
         overlayView.hidden = true
 
         setupImageView()
+        setupTextLabel()
 
         addSubview(overlayView)
 
@@ -120,30 +116,28 @@ private extension Player {
     func setupImageView() {
 
         playPauseImageView.tintColor = .whiteColor()
-        getImage()
+        playPauseImageView.image = UIImage(assetIdentifier: .Play)?.imageWithRenderingMode(.AlwaysTemplate)
 
         playPauseImageView.center = CGPoint(x: overlayView.bounds.midX, y: overlayView.bounds.midY)
         playPauseImageView.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
-        playPauseImageView.hidden = true
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didPressPlayPause))
         playPauseImageView.userInteractionEnabled = true
         playPauseImageView.addGestureRecognizer(tapGestureRecognizer)
 
-        addSubview(playPauseImageView)
+        overlayView.addSubview(playPauseImageView)
         
     }
 
-    func addTouchObservers() {
+    func setupTextLabel() {
 
-        addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(didTapOverlay)) )
+        textLabel.frame = textLabelFrame
+        textLabel.textAlignment = .Center
+        textLabel.font = smallFont
+        textLabel.textColor = .whiteColor()
+
+        overlayView.addSubview(textLabel)
         
-    }
-
-    func getImage() {
-
-        playPauseImageView.image = UIImage(assetIdentifier: isPlaying ? .Pause : .Play)?.imageWithRenderingMode(.AlwaysTemplate)
-
     }
 
 }
@@ -164,23 +158,19 @@ public extension Player {
 
 private extension Player {
 
-    /**
-     Makes overlay visible, then invisible automatically after 3 seconds
-     */
+    /** Makes overlay visible, then invisible automatically after 3 seconds */
     @objc func didTapOverlay() {
 
-        isOverlayVisible = true
         animateOverlay()
-        animateOverlayDisappearance()
 
     }
 
-    /**
-     Plays or pauses the video, depending on the current state
-    */
+    /** Plays or pauses the video, depending on the current state */
     @objc func didPressPlayPause() {
+
         isPlaying ? pause() : play()
-        animateOverlayDisappearance()
+        delayOverlayDisappearance()
+
     }
 
 }
@@ -189,18 +179,30 @@ private extension Player {
 
 private extension Player {
 
-    @objc func animateOverlay() {
+    /** Shows overlay */
+    func animateOverlay() {
 
-        playPauseImageView.hidden = isOverlayVisible
-        overlayView.hidden = !isOverlayVisible
-        playPauseImageView.hidden = !isOverlayVisible
-        isOverlayVisible = false
+        overlayView.hidden = false
+        textLabel.font = largeFont
+
+        delayOverlayDisappearance()
 
     }
 
-    func animateOverlayDisappearance() {
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlay), object: nil)
-        performSelector(#selector(animateOverlay), withObject: nil, afterDelay: 3.0)
+    /** Makes overlay disappear */
+    @objc func animateOverlayDisappearance() {
+
+        overlayView.hidden = true
+        textLabel.font = smallFont
+
+    }
+
+    /** Makes overlay disappear after 3 seconds. Resets timer if overlay was told to disappear previously */
+    func delayOverlayDisappearance() {
+
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlayDisappearance), object: nil)
+        performSelector(#selector(animateOverlayDisappearance), withObject: nil, afterDelay: 3.0)
+
     }
 
 }
@@ -216,14 +218,14 @@ public extension Player {
         }
 
         isPlaying = true
-        getImage()
+        playPauseImageView.image = UIImage(assetIdentifier: .Pause)?.imageWithRenderingMode(.AlwaysTemplate)
         player.play()
     }
 
     func pause() {
 
         isPlaying = false
-        getImage()
+        playPauseImageView.image = UIImage(assetIdentifier: .Play)?.imageWithRenderingMode(.AlwaysTemplate)
         player.pause()
 
     }
