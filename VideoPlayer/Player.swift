@@ -71,12 +71,14 @@ private extension Player {
     }
 
     func setupPlayer() {
+
         player.addPeriodicTimeObserverForInterval(CMTime(seconds: 1.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { [unowned self] cmtime in
             let time = Int(CMTimeGetSeconds(cmtime))
             let minutes = time/60
             let seconds = time%60
             self.textLabel.text = String(format: "%d:%02d", minutes, seconds)
         }
+
     }
 
     func setupPlayerLayer() {
