@@ -17,6 +17,7 @@ public class Player: UIView {
     private var player = AVPlayer()
 
     private var isPlaying = false
+    private let panGestureRecognizer = UIPanGestureRecognizer()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,9 +66,7 @@ private extension Player {
 
         player.addPeriodicTimeObserverForInterval(CMTime(seconds: 1.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { [unowned self] cmtime in
             let time = Int(CMTimeGetSeconds(cmtime))
-            let minutes = time/60
-            let seconds = time%60
-            self.overlayView.textLabel.text = String(format: "%d:%02d", minutes, seconds)
+            self.overlayView.textLabel.text = String(format: "%d:%02d", time/60, time%60)
         }
 
     }
@@ -84,7 +83,11 @@ private extension Player {
 
     func addTouchObservers() {
 
-        addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(didTapOverlay)) )
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTouchOverlay(_:))))
+
+        panGestureRecognizer.addTarget(self, action: #selector(handlePanGesture(_:)))
+        panGestureRecognizer.enabled = false
+        addGestureRecognizer(panGestureRecognizer)
 
     }
 }
@@ -112,7 +115,6 @@ public extension Player {
     func setupContentURL(url: NSURL) {
 
         player.replaceCurrentItemWithPlayerItem(AVPlayerItem(URL: url))
-        overlayView.setupAudioURL(audioURL: url)
 
     }
 
@@ -122,18 +124,48 @@ public extension Player {
 
 private extension Player {
 
-    /** Makes overlay visible, then invisible automatically after 3 seconds */
-    @objc func didTapOverlay() {
-
-        animateOverlay()
-
-    }
-
     /** Plays or pauses the video, depending on the current state */
     @objc func didPressPlayPause() {
 
         isPlaying ? pause() : play()
         delayOverlayDisappearance()
+
+    }
+
+    @objc func handlePanGesture(recognizer: UIGestureRecognizer) {
+
+        guard let item = player.currentItem else {
+            return
+        }
+
+        if isPlaying {
+            pause()
+        }
+
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlayDisappearance), object: nil)
+        let length = CMTimeGetSeconds(item.duration)
+        let percentMoved = Double(recognizer.locationInView(self).x/bounds.width)
+
+        var seconds = percentMoved*length
+
+        if seconds < 0 {
+            seconds = 0
+        } else if seconds > length {
+            seconds = length
+        }
+
+        NSLog("percent: \(percentMoved), seconds: \(seconds)")
+
+        overlayView.textLabel.text = String(format: "%d:%02d", Int(seconds)/60, Int(seconds)%60)
+        player.seekToTime(CMTime(seconds: seconds, preferredTimescale: Int32(NSEC_PER_SEC)))
+
+        if recognizer.state == .Ended {
+            if !isPlaying {
+                play()
+            }
+
+            performSelector(#selector(animateOverlayDisappearance), withObject: nil, afterDelay: 3.0)
+        }
 
     }
 
@@ -143,11 +175,17 @@ private extension Player {
 
 private extension Player {
 
-    /** Shows overlay */
-    func animateOverlay() {
+    /** Shows overlay or pans to specfic location if overlay is already visible */
+    @objc func didTouchOverlay(recognizer: UIGestureRecognizer) {
 
-        overlayView.show()
-        delayOverlayDisappearance()
+        if overlayView.isVisible {
+            handlePanGesture(recognizer)
+        } else {
+            overlayView.show()
+            panGestureRecognizer.enabled = true
+
+            delayOverlayDisappearance()
+        }
 
     }
 
@@ -155,6 +193,7 @@ private extension Player {
     @objc func animateOverlayDisappearance() {
 
         overlayView.hide()
+        panGestureRecognizer.enabled = false
 
     }
 
@@ -189,22 +228,6 @@ public extension Player {
         overlayView.changeImage(UIImage(assetIdentifier: .Play))
         player.pause()
 
-    }
-
-}
-
-// MARK: - FDWaveformViewDelegate
-
-extension Player: FDWaveformViewDelegate {
-
-    public func waveformDidBeginPanning(waveformView: FDWaveformView!) {
-        print("Began panning")
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlayDisappearance), object: nil)
-    }
-
-    public func waveformDidEndPanning(waveformView: FDWaveformView!) {
-        print("Ended panning")
-        performSelector(#selector(animateOverlayDisappearance), withObject: nil, afterDelay: 3.0)
     }
 
 }

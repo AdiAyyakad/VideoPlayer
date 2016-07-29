@@ -7,13 +7,15 @@
 //
 
 import UIKit
-import FDWaveformView
 
 class OverlayView: UIView {
 
+    var isVisible: Bool {
+        return !hidden
+    }
+
     var playPauseButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
     var textLabel = UILabel()
-    var scrubberView = FDWaveformView()
 
     private let scrubberHeight: CGFloat = 80
     private let font: UIFont = .systemFontOfSize(30)
@@ -37,20 +39,7 @@ class OverlayView: UIView {
     override func layoutSubviews() {
 
         textLabel.frame = textLabelFrame
-        scrubberView.frame = scrubberFrame
         
-    }
-
-}
-
-// MARK: - Setup
-
-extension OverlayView {
-
-    func setupAudioURL(audioURL url: NSURL) {
-
-        scrubberView.audioURL = url
-
     }
 
 }
@@ -66,7 +55,6 @@ private extension OverlayView {
 
         setupImageView()
         setupTextLabel()
-        setupScrubberView()
 
     }
 
@@ -92,20 +80,6 @@ private extension OverlayView {
         textLabel.textColor = .whiteColor()
         
         addSubview(textLabel)
-        
-    }
-
-    func setupScrubberView() {
-
-        scrubberView.doesAllowStretch = false
-        scrubberView.doesAllowScroll = true
-        scrubberView.doesAllowScrubbing = true
-
-        if let sv = superview as? Player {
-            scrubberView.delegate = sv
-        }
-
-        addSubview(scrubberView)
 
     }
 
