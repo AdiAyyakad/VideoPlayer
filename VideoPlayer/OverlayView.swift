@@ -19,18 +19,17 @@ class OverlayView: UIView {
 
     var isPlaying = false
     let textLabel = UILabel()
+    var font: UIFont = .systemFontOfSize(30)
     let playPauseButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
 
-    private let waveformHeight: CGFloat = 80
-    private let font: UIFont = .systemFontOfSize(30)
-    private let panGestureRecognizer = UIPanGestureRecognizer()
     private var delay: Double = 3.0
+    private let panGestureRecognizer = UIPanGestureRecognizer()
 
     private var textLabelFrame: CGRect {
-        return CGRect(origin: .zero, size: CGSize(width: bounds.width, height: waveformHeight/2))
+        return CGRect(origin: CGPoint(x: 0, y: playPauseButton.frame.maxY+12), size: CGSize(width: bounds.width, height: 30))
     }
-    private var waveformFrame: CGRect {
-        return CGRect(x: 0, y: bounds.maxY-waveformHeight, width: bounds.width, height: waveformHeight)
+    private var waveformLayerFrame: CGRect {
+        return CGRect(origin: textLabelFrame.origin, size: CGSize(width: bounds.width, height: 80))
     }
 
     // MARK: - Waveform Properties
@@ -53,7 +52,7 @@ class OverlayView: UIView {
     override func layoutSubviews() {
 
         textLabel.frame = textLabelFrame
-        waveformLayer.frame = waveformFrame
+        waveformLayer.frame = waveformLayerFrame
 
     }
 
@@ -69,8 +68,8 @@ private extension OverlayView {
         hidden = true
 
         setupPlayPauseButton()
-        setupTextLabel()
         setupWaveformView()
+        setupTextLabel()
 
     }
 
@@ -101,9 +100,8 @@ private extension OverlayView {
 
     func setupWaveformView() {
 
-        waveformLayer.frame = waveformFrame
-        waveformLayer.path = UIBezierPath(rect: CGRect(origin: bounds.origin,
-            size: CGSize(width: 0, height: bounds.height))).CGPath
+        waveformLayer.frame = waveformLayerFrame
+        waveformLayer.path = UIBezierPath(rect: CGRect(origin: bounds.origin, size: CGSize(width: 0, height: bounds.height))).CGPath
         waveformLayer.fillColor = fillColor.CGColor
         waveformLayer.borderColor = borderColor.CGColor
         waveformLayer.borderWidth = 1.0
@@ -185,7 +183,7 @@ extension OverlayView {
 
     func updateWaveformProgress(progress: Double) {
 
-        waveformLayer.path = UIBezierPath(rect: CGRect(origin: .zero, size: CGSize(width: CGFloat(progress)*waveformFrame.width, height: waveformFrame.height))).CGPath
+        waveformLayer.path = UIBezierPath(rect: CGRect(origin: .zero, size: CGSize(width: CGFloat(progress)*waveformLayerFrame.width, height: waveformLayerFrame.height))).CGPath
         
     }
 
