@@ -15,7 +15,11 @@ public class PlayerView: UIView {
     private var avPlayerLayer = AVPlayerLayer()
     private var overlayView = OverlayView()
 
-    private let delay = 3.0
+    var delay = 3.0 {
+        didSet {
+            overlayView.delay = delay
+        }
+    }
 
     // MARK: - Initializers
 
@@ -57,16 +61,11 @@ public extension PlayerView {
 private extension PlayerView {
 
     func setup() {
-        setupPlayer()
-        setupPlayerLayer()
-        setupOverlayView()
-        addTouchObservers()
-    }
-
-    func setupPlayer() {
 
         overlayView.updatePlayer(player)
-
+        setupPlayerLayer()
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTouchOverlay(_:))))
+        addSubview(overlayView)
     }
 
     func setupPlayerLayer() {
@@ -77,18 +76,6 @@ private extension PlayerView {
 
         layer.addSublayer(avPlayerLayer)
         
-    }
-
-    func addTouchObservers() {
-
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTouchOverlay(_:))))
-
-    }
-
-    func setupOverlayView() {
-
-        addSubview(overlayView)
-
     }
 
 }

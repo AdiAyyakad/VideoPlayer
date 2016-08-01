@@ -236,7 +236,7 @@ extension OverlayView {
 
 }
 
-// MARK: - Helper
+// MARK: - Helpers
 
 extension OverlayView {
 
