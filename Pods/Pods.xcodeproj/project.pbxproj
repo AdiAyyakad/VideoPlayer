@@ -1,0 +1,688 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08A8822D64801C3ADC8393BC6DEEC7C9 /* SCScrollableWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97BE1A68DD0608289DE141DA3D48EC48 /* SCScrollableWaveformView.m */; };
+		2C6E8433D2000AE3533BB5F7E983EBD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
+		318418D6AFD9C651F0250038FBBB3F9E /* SCWaveformView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 17FB6C40C1E704F5157A30F449D73743 /* SCWaveformView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		376B96576D6E9D0B6AA3587BCF931138 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
+		3813DF33310868704ADDCFA8C4B86018 /* SCWaveformView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE86B3D307732C8FA3F24BDB47773CD /* SCWaveformView-dummy.m */; };
+		580B3B4A6C71450C7B0D3BA3CE13B148 /* Pods-VideoPlayer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 975B1086DC6FE886B32A9CA0A5434994 /* Pods-VideoPlayer-dummy.m */; };
+		581134EA5254CF70B6F3D611B277CECD /* SCWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9389FF923D0B1976521CA910594C0A4 /* SCWaveformView.m */; };
+		72F4C5A9C87F6DE4A29C802C0B74423D /* Pods-VideoPlayerTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EFC9EF51E3455463935615D610E55A88 /* Pods-VideoPlayerTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		809887F95571F1638FEABEB85DBD5EC6 /* SCWaveformCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D022B38C17CCE98C99003B909AB247 /* SCWaveformCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8C22383ECDBC5FC17A587E7D1484F841 /* SCWaveformView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D21E0D95266274CD98362344127087B /* SCWaveformView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A4C28E0149D43B6BB5BCA8272AFA9975 /* SCWaveformCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C49836DB94054AC9DB00A4799F066CC5 /* SCWaveformCache.m */; };
+		A986FF618C70C5099D918817FE5B3CBF /* Pods-VideoPlayer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DDDF531A8B957D21C3EEC4C78C0E05D /* Pods-VideoPlayer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B7054AFA96BE103F59F60C01F94DF128 /* Pods-VideoPlayerTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A379D4723F11EB3CA47195D35EBB923 /* Pods-VideoPlayerTests-dummy.m */; };
+		C4625BDFD058B9FF9CFC1B9890A69DCE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
+		D9025E4CFE6A1D3795E59D870C49762E /* SCScrollableWaveformView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AB49C6F9942C6271937FF2940FCF78A /* SCScrollableWaveformView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5ACC1522257F46CA9C2FDF02497DD957 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29B461C6599BBD1022AFD3735123D4DD;
+			remoteInfo = SCWaveformView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00E93FF912F2FB660D29842A59815DAE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03369C85E10D8808C149CFD4F34BBDC5 /* Pods-VideoPlayer-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-VideoPlayer-acknowledgements.plist"; sourceTree = "<group>"; };
+		09AC9B3AB587D943FB8F51138472D709 /* SCWaveformView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SCWaveformView.xcconfig; sourceTree = "<group>"; };
+		0A379D4723F11EB3CA47195D35EBB923 /* Pods-VideoPlayerTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-VideoPlayerTests-dummy.m"; sourceTree = "<group>"; };
+		17FB6C40C1E704F5157A30F449D73743 /* SCWaveformView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SCWaveformView-umbrella.h"; sourceTree = "<group>"; };
+		1AB49C6F9942C6271937FF2940FCF78A /* SCScrollableWaveformView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SCScrollableWaveformView.h; path = Sources/SCScrollableWaveformView.h; sourceTree = "<group>"; };
+		2A603A19BD1EB43BB049AF6F383C6FD5 /* Pods-VideoPlayerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VideoPlayerTests.release.xcconfig"; sourceTree = "<group>"; };
+		2D21E0D95266274CD98362344127087B /* SCWaveformView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SCWaveformView.h; path = Sources/SCWaveformView.h; sourceTree = "<group>"; };
+		455CE56D33DC1BE7E4AEA1647C80C34E /* Pods-VideoPlayerTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VideoPlayerTests-resources.sh"; sourceTree = "<group>"; };
+		4FE3A4417731636525B9D3B4B52DCA21 /* Pods-VideoPlayerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VideoPlayerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		50D022B38C17CCE98C99003B909AB247 /* SCWaveformCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SCWaveformCache.h; path = Sources/SCWaveformCache.h; sourceTree = "<group>"; };
+		58F3A118CA2BF3305AA9C248690CAE62 /* Pods-VideoPlayer-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VideoPlayer-resources.sh"; sourceTree = "<group>"; };
+		5AFC5F65F2EBD3B207A07B8476829372 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BFC75BE38E6F628ABDC7E7AD5AC458E /* Pods-VideoPlayer-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-VideoPlayer-acknowledgements.markdown"; sourceTree = "<group>"; };
+		6F7E2B2C8289472B0E78400C16740398 /* Pods-VideoPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VideoPlayer.debug.xcconfig"; sourceTree = "<group>"; };
+		889E31CF6CCE7262C23968443A56DA5A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92DE433F050E8AF79D0F763F0DF5CEAD /* Pods-VideoPlayer-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VideoPlayer-frameworks.sh"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		975B1086DC6FE886B32A9CA0A5434994 /* Pods-VideoPlayer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-VideoPlayer-dummy.m"; sourceTree = "<group>"; };
+		97BE1A68DD0608289DE141DA3D48EC48 /* SCScrollableWaveformView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SCScrollableWaveformView.m; path = Sources/SCScrollableWaveformView.m; sourceTree = "<group>"; };
+		9DDDF531A8B957D21C3EEC4C78C0E05D /* Pods-VideoPlayer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-VideoPlayer-umbrella.h"; sourceTree = "<group>"; };
+		A1197A19FC6FB8701811E68B9315A86F /* SCWaveformView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = SCWaveformView.modulemap; sourceTree = "<group>"; };
+		B9389FF923D0B1976521CA910594C0A4 /* SCWaveformView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SCWaveformView.m; path = Sources/SCWaveformView.m; sourceTree = "<group>"; };
+		C2CA58A06F1217482E79B1EEEAEBE515 /* SCWaveformView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SCWaveformView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C49836DB94054AC9DB00A4799F066CC5 /* SCWaveformCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SCWaveformCache.m; path = Sources/SCWaveformCache.m; sourceTree = "<group>"; };
+		CAE1110A38F63C472E8C8C9025B00F6F /* SCWaveformView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SCWaveformView-prefix.pch"; sourceTree = "<group>"; };
+		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		D9B114D407F90396F9EFC013C1BAC20F /* Pods_VideoPlayerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFE86B3D307732C8FA3F24BDB47773CD /* SCWaveformView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SCWaveformView-dummy.m"; sourceTree = "<group>"; };
+		E22C131D213D5C31827202C3D544E259 /* Pods-VideoPlayerTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-VideoPlayerTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		E581D8D8985021B37CC5D59DA45A4AEE /* Pods-VideoPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VideoPlayer.release.xcconfig"; sourceTree = "<group>"; };
+		EFC9EF51E3455463935615D610E55A88 /* Pods-VideoPlayerTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-VideoPlayerTests-umbrella.h"; sourceTree = "<group>"; };
+		F16987D54CE082CC6F6026BAB49998D8 /* Pods-VideoPlayer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-VideoPlayer.modulemap"; sourceTree = "<group>"; };
+		F20D9CF2ABA23C010C5BDA5FCB5258C6 /* Pods-VideoPlayerTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-VideoPlayerTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		F8B3925AE3A02749BB5733E7EDCEAEEB /* Pods-VideoPlayerTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VideoPlayerTests-frameworks.sh"; sourceTree = "<group>"; };
+		FA59D8ED9143327D14FDA2AE92964A10 /* Pods_VideoPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFB9CB75799F127793F28EFC36DC4B0F /* Pods-VideoPlayerTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-VideoPlayerTests.modulemap"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		761D19449FCD08DF85CF100A3A073465 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4625BDFD058B9FF9CFC1B9890A69DCE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7801A030E2DD833F48A36C32A134B147 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				376B96576D6E9D0B6AA3587BCF931138 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F225667B2EB56AA38ECCB2D603A68C14 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C6E8433D2000AE3533BB5F7E983EBD2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1788C7B09C6DCF7D0B061A465AE6A2AD /* Pods-VideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				889E31CF6CCE7262C23968443A56DA5A /* Info.plist */,
+				F16987D54CE082CC6F6026BAB49998D8 /* Pods-VideoPlayer.modulemap */,
+				6BFC75BE38E6F628ABDC7E7AD5AC458E /* Pods-VideoPlayer-acknowledgements.markdown */,
+				03369C85E10D8808C149CFD4F34BBDC5 /* Pods-VideoPlayer-acknowledgements.plist */,
+				975B1086DC6FE886B32A9CA0A5434994 /* Pods-VideoPlayer-dummy.m */,
+				92DE433F050E8AF79D0F763F0DF5CEAD /* Pods-VideoPlayer-frameworks.sh */,
+				58F3A118CA2BF3305AA9C248690CAE62 /* Pods-VideoPlayer-resources.sh */,
+				9DDDF531A8B957D21C3EEC4C78C0E05D /* Pods-VideoPlayer-umbrella.h */,
+				6F7E2B2C8289472B0E78400C16740398 /* Pods-VideoPlayer.debug.xcconfig */,
+				E581D8D8985021B37CC5D59DA45A4AEE /* Pods-VideoPlayer.release.xcconfig */,
+			);
+			name = "Pods-VideoPlayer";
+			path = "Target Support Files/Pods-VideoPlayer";
+			sourceTree = "<group>";
+		};
+		30F5CFA61F10C66817ACED0129B4FED4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA59D8ED9143327D14FDA2AE92964A10 /* Pods_VideoPlayer.framework */,
+				D9B114D407F90396F9EFC013C1BAC20F /* Pods_VideoPlayerTests.framework */,
+				C2CA58A06F1217482E79B1EEEAEBE515 /* SCWaveformView.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		56003436B097BE01D26B1283C02DE4B2 /* Pods-VideoPlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				00E93FF912F2FB660D29842A59815DAE /* Info.plist */,
+				FFB9CB75799F127793F28EFC36DC4B0F /* Pods-VideoPlayerTests.modulemap */,
+				E22C131D213D5C31827202C3D544E259 /* Pods-VideoPlayerTests-acknowledgements.markdown */,
+				F20D9CF2ABA23C010C5BDA5FCB5258C6 /* Pods-VideoPlayerTests-acknowledgements.plist */,
+				0A379D4723F11EB3CA47195D35EBB923 /* Pods-VideoPlayerTests-dummy.m */,
+				F8B3925AE3A02749BB5733E7EDCEAEEB /* Pods-VideoPlayerTests-frameworks.sh */,
+				455CE56D33DC1BE7E4AEA1647C80C34E /* Pods-VideoPlayerTests-resources.sh */,
+				EFC9EF51E3455463935615D610E55A88 /* Pods-VideoPlayerTests-umbrella.h */,
+				4FE3A4417731636525B9D3B4B52DCA21 /* Pods-VideoPlayerTests.debug.xcconfig */,
+				2A603A19BD1EB43BB049AF6F383C6FD5 /* Pods-VideoPlayerTests.release.xcconfig */,
+			);
+			name = "Pods-VideoPlayerTests";
+			path = "Target Support Files/Pods-VideoPlayerTests";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				D40E74718BA6ECB21EBCAFB7B1808AD4 /* Pods */,
+				30F5CFA61F10C66817ACED0129B4FED4 /* Products */,
+				C19036192C8B86F89502527DF1F48B54 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C19036192C8B86F89502527DF1F48B54 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1788C7B09C6DCF7D0B061A465AE6A2AD /* Pods-VideoPlayer */,
+				56003436B097BE01D26B1283C02DE4B2 /* Pods-VideoPlayerTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		CCEA657B4230820B67693A29F3F04183 /* SCWaveformView */ = {
+			isa = PBXGroup;
+			children = (
+				1AB49C6F9942C6271937FF2940FCF78A /* SCScrollableWaveformView.h */,
+				97BE1A68DD0608289DE141DA3D48EC48 /* SCScrollableWaveformView.m */,
+				50D022B38C17CCE98C99003B909AB247 /* SCWaveformCache.h */,
+				C49836DB94054AC9DB00A4799F066CC5 /* SCWaveformCache.m */,
+				2D21E0D95266274CD98362344127087B /* SCWaveformView.h */,
+				B9389FF923D0B1976521CA910594C0A4 /* SCWaveformView.m */,
+				F31DAEC921BCE49DCC9BAE1A71A01E5B /* Support Files */,
+			);
+			path = SCWaveformView;
+			sourceTree = "<group>";
+		};
+		D40E74718BA6ECB21EBCAFB7B1808AD4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CCEA657B4230820B67693A29F3F04183 /* SCWaveformView */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F31DAEC921BCE49DCC9BAE1A71A01E5B /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5AFC5F65F2EBD3B207A07B8476829372 /* Info.plist */,
+				A1197A19FC6FB8701811E68B9315A86F /* SCWaveformView.modulemap */,
+				09AC9B3AB587D943FB8F51138472D709 /* SCWaveformView.xcconfig */,
+				DFE86B3D307732C8FA3F24BDB47773CD /* SCWaveformView-dummy.m */,
+				CAE1110A38F63C472E8C8C9025B00F6F /* SCWaveformView-prefix.pch */,
+				17FB6C40C1E704F5157A30F449D73743 /* SCWaveformView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SCWaveformView";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8EF6DE181FE5E07845ACD63CBFD53099 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A986FF618C70C5099D918817FE5B3CBF /* Pods-VideoPlayer-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F321D8027298AECB2AE5B6A1696F5B2F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72F4C5A9C87F6DE4A29C802C0B74423D /* Pods-VideoPlayerTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA85FFF8843F1EA098AA8263FF8410B4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9025E4CFE6A1D3795E59D870C49762E /* SCScrollableWaveformView.h in Headers */,
+				809887F95571F1638FEABEB85DBD5EC6 /* SCWaveformCache.h in Headers */,
+				318418D6AFD9C651F0250038FBBB3F9E /* SCWaveformView-umbrella.h in Headers */,
+				8C22383ECDBC5FC17A587E7D1484F841 /* SCWaveformView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		29B461C6599BBD1022AFD3735123D4DD /* SCWaveformView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48787C6F697C67FFCED46B45601D17A5 /* Build configuration list for PBXNativeTarget "SCWaveformView" */;
+			buildPhases = (
+				24B4795ABFDAF094FCDEBB0105869027 /* Sources */,
+				7801A030E2DD833F48A36C32A134B147 /* Frameworks */,
+				FA85FFF8843F1EA098AA8263FF8410B4 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SCWaveformView;
+			productName = SCWaveformView;
+			productReference = C2CA58A06F1217482E79B1EEEAEBE515 /* SCWaveformView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		54BD5681A13F68FEE5F5D04D456B947F /* Pods-VideoPlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAC3B3B7542D0523AE0638465E636EDF /* Build configuration list for PBXNativeTarget "Pods-VideoPlayerTests" */;
+			buildPhases = (
+				67A2950DCD6BD95AE980F8B2C280D022 /* Sources */,
+				F225667B2EB56AA38ECCB2D603A68C14 /* Frameworks */,
+				F321D8027298AECB2AE5B6A1696F5B2F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-VideoPlayerTests";
+			productName = "Pods-VideoPlayerTests";
+			productReference = D9B114D407F90396F9EFC013C1BAC20F /* Pods_VideoPlayerTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F2F53F703B1D7ED7EA82EF3699E577A1 /* Pods-VideoPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 41330EF2040A424D51D337C9FADD98DE /* Build configuration list for PBXNativeTarget "Pods-VideoPlayer" */;
+			buildPhases = (
+				4372589A889C47258E6F8D41D04EF7F5 /* Sources */,
+				761D19449FCD08DF85CF100A3A073465 /* Frameworks */,
+				8EF6DE181FE5E07845ACD63CBFD53099 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7CAF1767CE27858765DC6E2927CAE07 /* PBXTargetDependency */,
+			);
+			name = "Pods-VideoPlayer";
+			productName = "Pods-VideoPlayer";
+			productReference = FA59D8ED9143327D14FDA2AE92964A10 /* Pods_VideoPlayer.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 30F5CFA61F10C66817ACED0129B4FED4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F2F53F703B1D7ED7EA82EF3699E577A1 /* Pods-VideoPlayer */,
+				54BD5681A13F68FEE5F5D04D456B947F /* Pods-VideoPlayerTests */,
+				29B461C6599BBD1022AFD3735123D4DD /* SCWaveformView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		24B4795ABFDAF094FCDEBB0105869027 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08A8822D64801C3ADC8393BC6DEEC7C9 /* SCScrollableWaveformView.m in Sources */,
+				A4C28E0149D43B6BB5BCA8272AFA9975 /* SCWaveformCache.m in Sources */,
+				3813DF33310868704ADDCFA8C4B86018 /* SCWaveformView-dummy.m in Sources */,
+				581134EA5254CF70B6F3D611B277CECD /* SCWaveformView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4372589A889C47258E6F8D41D04EF7F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				580B3B4A6C71450C7B0D3BA3CE13B148 /* Pods-VideoPlayer-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67A2950DCD6BD95AE980F8B2C280D022 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7054AFA96BE103F59F60C01F94DF128 /* Pods-VideoPlayerTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B7CAF1767CE27858765DC6E2927CAE07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SCWaveformView;
+			target = 29B461C6599BBD1022AFD3735123D4DD /* SCWaveformView */;
+			targetProxy = 5ACC1522257F46CA9C2FDF02497DD957 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0B1C80301C3C39455B7DB37D17BC30E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4FE3A4417731636525B9D3B4B52DCA21 /* Pods-VideoPlayerTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-VideoPlayerTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-VideoPlayerTests/Pods-VideoPlayerTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_VideoPlayerTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		2BA90B178171D2835C1F9CDF32FBE618 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A603A19BD1EB43BB049AF6F383C6FD5 /* Pods-VideoPlayerTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-VideoPlayerTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-VideoPlayerTests/Pods-VideoPlayerTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_VideoPlayerTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3FA451D268613890FA8A5A03801E11D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5E62115DE8C09934BF8D2FE5D15FED1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		6C3671F333220EA678C788FAC52A6882 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09AC9B3AB587D943FB8F51138472D709 /* SCWaveformView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SCWaveformView/SCWaveformView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SCWaveformView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SCWaveformView/SCWaveformView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = SCWaveformView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		909132348E4F8CE11CDBECA55B112166 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E581D8D8985021B37CC5D59DA45A4AEE /* Pods-VideoPlayer.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-VideoPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_VideoPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E29BC1D369519E1E4E2520E05FD20332 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F7E2B2C8289472B0E78400C16740398 /* Pods-VideoPlayer.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-VideoPlayer/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_VideoPlayer;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		ED22012451C08836F7B34795E91950DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09AC9B3AB587D943FB8F51138472D709 /* SCWaveformView.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SCWaveformView/SCWaveformView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SCWaveformView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SCWaveformView/SCWaveformView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SCWaveformView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E62115DE8C09934BF8D2FE5D15FED1E /* Debug */,
+				3FA451D268613890FA8A5A03801E11D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		41330EF2040A424D51D337C9FADD98DE /* Build configuration list for PBXNativeTarget "Pods-VideoPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E29BC1D369519E1E4E2520E05FD20332 /* Debug */,
+				909132348E4F8CE11CDBECA55B112166 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		48787C6F697C67FFCED46B45601D17A5 /* Build configuration list for PBXNativeTarget "SCWaveformView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C3671F333220EA678C788FAC52A6882 /* Debug */,
+				ED22012451C08836F7B34795E91950DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAC3B3B7542D0523AE0638465E636EDF /* Build configuration list for PBXNativeTarget "Pods-VideoPlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B1C80301C3C39455B7DB37D17BC30E2 /* Debug */,
+				2BA90B178171D2835C1F9CDF32FBE618 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
