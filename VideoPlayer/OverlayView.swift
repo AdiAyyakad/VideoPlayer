@@ -13,17 +13,16 @@ class OverlayView: UIView {
 
     // MARK: - Overlay Properties
 
-    var isVisible: Bool {
-        return !hidden
-    }
-
+    var isVisible: Bool { return !hidden }
     var isPlaying = false
-    let textLabel = UILabel()
     var font: UIFont = .systemFontOfSize(30)
-    let playPauseButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
+    var delay: Double = 3.0
 
-    private var delay: Double = 3.0
     private let panGestureRecognizer = UIPanGestureRecognizer()
+    private let textLabel = UILabel()
+    private let playPauseButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
+    private var timerObserver: AnyObject?
+    private var waveformObserver: AnyObject?
 
     private var textLabelFrame: CGRect {
         return CGRect(origin: CGPoint(x: 0, y: playPauseButton.frame.maxY+12), size: CGSize(width: bounds.width, height: 30))
@@ -35,7 +34,6 @@ class OverlayView: UIView {
     // MARK: - Waveform Properties
 
     var fillColor: UIColor = .redColor()
-    var borderColor: UIColor = .blackColor()
     var waveformLayer = CAShapeLayer()
     weak var player: AVPlayer?
 
@@ -56,6 +54,17 @@ class OverlayView: UIView {
 
     }
 
+    deinit {
+
+        guard let timerObserver = timerObserver, waveformObserver = waveformObserver else {
+            return
+        }
+
+        player?.removeTimeObserver(timerObserver)
+        player?.removeTimeObserver(waveformObserver)
+
+    }
+
 }
 
 // MARK: - Private Setup
@@ -64,7 +73,7 @@ private extension OverlayView {
 
     func setup() {
 
-        backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.3)
+        backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
         hidden = true
 
         setupPlayPauseButton()
@@ -85,6 +94,8 @@ private extension OverlayView {
 
         addSubview(playPauseButton)
 
+        playPauseButton.addTarget(self, action: #selector(didPressPlayPause), forControlEvents: .TouchUpInside)
+
     }
 
     func setupTextLabel() {
@@ -103,8 +114,6 @@ private extension OverlayView {
         waveformLayer.frame = waveformLayerFrame
         waveformLayer.path = UIBezierPath(rect: CGRect(origin: bounds.origin, size: CGSize(width: 0, height: bounds.height))).CGPath
         waveformLayer.fillColor = fillColor.CGColor
-        waveformLayer.borderColor = borderColor.CGColor
-        waveformLayer.borderWidth = 1.0
 
         layer.addSublayer(waveformLayer)
 
@@ -131,18 +140,11 @@ extension OverlayView {
         }
 
         let length = CMTimeGetSeconds(item.duration)
-        let percentMoved = Double(recognizer.locationInView(self).x/bounds.width)
-
-        var seconds = percentMoved*length
-
-        if seconds < 0 {
-            seconds = 0
-        } else if seconds > length {
-            seconds = length
-        }
+        let percentMoved = clamp(item: Double(recognizer.locationInView(self).x/bounds.width), low: 0, high: 1)
+        let seconds = percentMoved*length
 
         textLabel.text = String(format: "%d:%02d", Int(seconds)/60, Int(seconds)%60)
-        updateWaveformProgress(percentMoved)
+        updateWaveformProgress(CGFloat(percentMoved))
 
         player?.seekToTime(CMTime(seconds: seconds, preferredTimescale: Int32(NSEC_PER_SEC)))
 
@@ -181,9 +183,10 @@ extension OverlayView {
 
     }
 
-    func updateWaveformProgress(progress: Double) {
+    func updateWaveformProgress(progress: CGFloat) {
 
-        waveformLayer.path = UIBezierPath(rect: CGRect(origin: .zero, size: CGSize(width: CGFloat(progress)*waveformLayerFrame.width, height: waveformLayerFrame.height))).CGPath
+        let path = UIBezierPath(rect: CGRect(origin: .zero, size: CGSize(width: progress*waveformLayerFrame.width, height: waveformLayerFrame.height)))
+        waveformLayer.path = path.CGPath
         
     }
 
@@ -197,11 +200,25 @@ extension OverlayView {
 
         self.player = player
 
+        timerObserver = player.addPeriodicTimeObserverForInterval(CMTime(seconds: 1.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { [unowned self] cmtime in
+            let time = Int(CMTimeGetSeconds(cmtime))
+            self.textLabel.text = String(format: "%d:%02d", time/60, time%60)
+        }
+
+        waveformObserver = player.addPeriodicTimeObserverForInterval(CMTime(seconds: 0.2, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { (cmtime) in
+            guard let item = self.player?.currentItem else {
+                return
+            }
+
+            self.updateWaveformProgress(CGFloat(CMTimeGetSeconds(cmtime)/CMTimeGetSeconds(item.duration)))
+        }
+
     }
 
     func didPressPlayPause() {
 
         isPlaying ? pause() : play()
+        hideWithDelay(delay)
 
     }
 
@@ -215,6 +232,23 @@ extension OverlayView {
         player?.pause()
         changeImage(UIImage(assetIdentifier: .Play))
         isPlaying = false
+    }
+
+}
+
+// MARK: - Helper
+
+extension OverlayView {
+
+    func clamp(item item: Double, low: Double, high: Double) -> Double {
+
+        if item < low {
+            return low
+        } else if item > high {
+            return high
+        } else {
+            return item
+        }
     }
 
 }

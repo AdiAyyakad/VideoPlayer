@@ -14,8 +14,6 @@ public class PlayerView: UIView {
     private var player = AVPlayer()
     private var avPlayerLayer = AVPlayerLayer()
     private var overlayView = OverlayView()
-    private var timerObserver: AnyObject?
-    private var waveformObserver: AnyObject?
 
     private let delay = 3.0
 
@@ -39,16 +37,6 @@ public class PlayerView: UIView {
         setup()
     }
 
-    deinit {
-
-        guard let timerObserver = timerObserver, waveformObserver = waveformObserver else {
-            return
-        }
-
-        player.removeTimeObserver(timerObserver)
-        player.removeTimeObserver(waveformObserver)
-
-    }
 }
 
 // MARK: - Overrides
@@ -77,19 +65,6 @@ private extension PlayerView {
 
     func setupPlayer() {
 
-        timerObserver = player.addPeriodicTimeObserverForInterval(CMTime(seconds: 1.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { [unowned self] cmtime in
-            let time = Int(CMTimeGetSeconds(cmtime))
-            self.overlayView.textLabel.text = String(format: "%d:%02d", time/60, time%60)
-        }
-
-        waveformObserver = player.addPeriodicTimeObserverForInterval(CMTime(seconds: 0.2, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { (cmtime) in
-            guard let item = self.player.currentItem else {
-                return
-            }
-
-            self.overlayView.updateWaveformProgress(CMTimeGetSeconds(cmtime)/CMTimeGetSeconds(item.duration))
-        }
-
         overlayView.updatePlayer(player)
 
     }
@@ -111,10 +86,6 @@ private extension PlayerView {
     }
 
     func setupOverlayView() {
-
-        overlayView.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.3)
-        overlayView.hide()
-        overlayView.playPauseButton.addTarget(self, action: #selector(didPressPlayPause), forControlEvents: .TouchUpInside)
 
         addSubview(overlayView)
 
@@ -144,20 +115,6 @@ public extension PlayerView {
 
     func pause() {
         overlayView.pause()
-    }
-
-}
-
-// MARK: - Private actions
-
-private extension PlayerView {
-
-    /** Plays or pauses the video, depending on the current state */
-    @objc func didPressPlayPause() {
-
-        overlayView.didPressPlayPause()
-        overlayView.hideWithDelay(delay)
-
     }
 
 }
