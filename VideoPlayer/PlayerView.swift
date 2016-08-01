@@ -14,6 +14,10 @@ public class PlayerView: UIView {
     private var player = AVPlayer()
     private var avPlayerLayer = AVPlayerLayer()
     private var overlayView = OverlayView()
+    private var timerObserver: AnyObject?
+    private var waveformObserver: AnyObject?
+
+    private let delay = 3.0
 
     // MARK: - Initializers
 
@@ -33,6 +37,17 @@ public class PlayerView: UIView {
         super.init(coder: aDecoder)
 
         setup()
+    }
+
+    deinit {
+
+        guard let timerObserver = timerObserver, waveformObserver = waveformObserver else {
+            return
+        }
+
+        player.removeTimeObserver(timerObserver)
+        player.removeTimeObserver(waveformObserver)
+
     }
 }
 
@@ -62,15 +77,17 @@ private extension PlayerView {
 
     func setupPlayer() {
 
-        player.addPeriodicTimeObserverForInterval(CMTime(seconds: 1.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { [unowned self] cmtime in
+        timerObserver = player.addPeriodicTimeObserverForInterval(CMTime(seconds: 1.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { [unowned self] cmtime in
             let time = Int(CMTimeGetSeconds(cmtime))
             self.overlayView.textLabel.text = String(format: "%d:%02d", time/60, time%60)
+        }
 
+        waveformObserver = player.addPeriodicTimeObserverForInterval(CMTime(seconds: 0.2, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { (cmtime) in
             guard let item = self.player.currentItem else {
                 return
             }
 
-            self.overlayView.waveformView.updateProgress(CMTimeGetSeconds(cmtime)/CMTimeGetSeconds(item.duration))
+            self.overlayView.updateWaveformProgress(CMTimeGetSeconds(cmtime)/CMTimeGetSeconds(item.duration))
         }
 
         overlayView.updatePlayer(player)
@@ -139,7 +156,7 @@ private extension PlayerView {
     @objc func didPressPlayPause() {
 
         overlayView.didPressPlayPause()
-        delayOverlayDisappearance()
+        overlayView.hideWithDelay(delay)
 
     }
 
@@ -153,22 +170,7 @@ private extension PlayerView {
     @objc func didTouchOverlay(recognizer: UIGestureRecognizer) {
 
         overlayView.isVisible ? overlayView.handlePanGesture(recognizer) : overlayView.show()
-        delayOverlayDisappearance()
-
-    }
-
-    /** Makes overlay disappear */
-    @objc func animateOverlayDisappearance() {
-
-        overlayView.hide()
-
-    }
-
-    /** Makes overlay disappear after 3 seconds. Resets timer if overlay was told to disappear previously */
-    func delayOverlayDisappearance() {
-
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(animateOverlayDisappearance), object: nil)
-        performSelector(#selector(animateOverlayDisappearance), withObject: nil, afterDelay: 3.0)
+        overlayView.hideWithDelay(delay)
 
     }
 

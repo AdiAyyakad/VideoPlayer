@@ -11,18 +11,20 @@ import AVFoundation
 
 class OverlayView: UIView {
 
+    // MARK: - Overlay Properties
+
     var isVisible: Bool {
         return !hidden
     }
 
     var isPlaying = false
     let textLabel = UILabel()
-    let waveformView = WaveformView()
     let playPauseButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
 
     private let waveformHeight: CGFloat = 80
     private let font: UIFont = .systemFontOfSize(30)
     private let panGestureRecognizer = UIPanGestureRecognizer()
+    private var delay: Double = 3.0
 
     private var textLabelFrame: CGRect {
         return CGRect(origin: .zero, size: CGSize(width: bounds.width, height: waveformHeight/2))
@@ -30,6 +32,13 @@ class OverlayView: UIView {
     private var waveformFrame: CGRect {
         return CGRect(x: 0, y: bounds.maxY-waveformHeight, width: bounds.width, height: waveformHeight)
     }
+
+    // MARK: - Waveform Properties
+
+    var fillColor: UIColor = .redColor()
+    var borderColor: UIColor = .blackColor()
+    var waveformLayer = CAShapeLayer()
+    weak var player: AVPlayer?
 
     init() {
         super.init(frame: .zero)
@@ -44,7 +53,7 @@ class OverlayView: UIView {
     override func layoutSubviews() {
 
         textLabel.frame = textLabelFrame
-        waveformView.frame = waveformFrame
+        waveformLayer.frame = waveformFrame
 
     }
 
@@ -92,8 +101,14 @@ private extension OverlayView {
 
     func setupWaveformView() {
 
-        waveformView.frame = waveformFrame
-        addSubview(waveformView)
+        waveformLayer.frame = waveformFrame
+        waveformLayer.path = UIBezierPath(rect: CGRect(origin: bounds.origin,
+            size: CGSize(width: 0, height: bounds.height))).CGPath
+        waveformLayer.fillColor = fillColor.CGColor
+        waveformLayer.borderColor = borderColor.CGColor
+        waveformLayer.borderWidth = 1.0
+
+        layer.addSublayer(waveformLayer)
 
         panGestureRecognizer.addTarget(self, action: #selector(handlePanGesture(_:)))
         addGestureRecognizer(panGestureRecognizer)
@@ -108,13 +123,12 @@ extension OverlayView {
 
     @objc func handlePanGesture(recognizer: UIGestureRecognizer) {
 
-        print(recognizer.locationInView(self))
-
-        guard let item = waveformView.player?.currentItem else {
+        guard let item = player?.currentItem else {
             return
         }
 
         if isPlaying {
+            NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(hide), object: nil)
             pause()
         }
 
@@ -130,11 +144,12 @@ extension OverlayView {
         }
 
         textLabel.text = String(format: "%d:%02d", Int(seconds)/60, Int(seconds)%60)
-        waveformView.updateProgress(percentMoved)
+        updateWaveformProgress(percentMoved)
 
-        waveformView.player?.seekToTime(CMTime(seconds: seconds, preferredTimescale: Int32(NSEC_PER_SEC)))
+        player?.seekToTime(CMTime(seconds: seconds, preferredTimescale: Int32(NSEC_PER_SEC)))
 
         if recognizer.state == .Ended {
+            performSelector(#selector(hide), withObject: nil, afterDelay: delay)
             if !isPlaying {
                 play()
             }
@@ -160,6 +175,20 @@ extension OverlayView {
         hidden = true
     }
 
+    func hideWithDelay(delay: Double) {
+
+        self.delay = delay
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(hide), object: nil)
+        performSelector(#selector(hide), withObject: nil, afterDelay: delay)
+
+    }
+
+    func updateWaveformProgress(progress: Double) {
+
+        waveformLayer.path = UIBezierPath(rect: CGRect(origin: .zero, size: CGSize(width: CGFloat(progress)*waveformFrame.width, height: waveformFrame.height))).CGPath
+        
+    }
+
 }
 
 // MARK: - Player Actions
@@ -167,7 +196,9 @@ extension OverlayView {
 extension OverlayView {
 
     func updatePlayer(player: AVPlayer) {
-        waveformView.player = player
+
+        self.player = player
+
     }
 
     func didPressPlayPause() {
@@ -177,13 +208,13 @@ extension OverlayView {
     }
 
     func play() {
-        waveformView.player?.play()
+        player?.play()
         changeImage(UIImage(assetIdentifier: .Pause))
         isPlaying = true
     }
 
     func pause() {
-        waveformView.player?.pause()
+        player?.pause()
         changeImage(UIImage(assetIdentifier: .Play))
         isPlaying = false
     }
