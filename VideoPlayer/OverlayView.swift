@@ -57,17 +57,13 @@ class OverlayView: UIView {
 
     deinit {
 
-        guard let timerObserver = timerObserver else {
-            return
+        if let timerObserver = timerObserver {
+            player?.removeTimeObserver(timerObserver)
         }
 
-        player?.removeTimeObserver(timerObserver)
-
-        guard let waveformObserver = waveformObserver else {
-            return
+        if let waveformObserver = waveformObserver {
+            player?.removeTimeObserver(waveformObserver)
         }
-
-        player?.removeTimeObserver(waveformObserver)
 
     }
 
