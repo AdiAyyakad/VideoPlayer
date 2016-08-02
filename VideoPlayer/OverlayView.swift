@@ -28,7 +28,7 @@ class OverlayView: UIView {
     private var textLabelFrame: CGRect {
         return CGRect(origin: CGPoint(x: 0, y: playPauseButton.frame.maxY+12), size: CGSize(width: bounds.width, height: 30))
     }
-    private var waveformLineFrame: CGRect {
+    private var waveformFrame: CGRect {
         return CGRect(x: 0, y: textLabelFrame.maxY, width: bounds.width, height: 80)
     }
 
@@ -51,7 +51,7 @@ class OverlayView: UIView {
     override func layoutSubviews() {
 
         textLabel.frame = textLabelFrame
-        waveformView.frame = waveformLineFrame
+        waveformView.frame = waveformFrame
 
     }
 
@@ -117,6 +117,7 @@ private extension OverlayView {
         waveformView.lineWidthRatio = 0.5
         waveformView.normalColor = UIColor.lightGrayColor()
         waveformView.progressColor = progressColor
+        waveformView.transform = CGAffineTransformIdentity
 
         addSubview(waveformView)
         
@@ -144,6 +145,16 @@ extension OverlayView {
         // set the relative time if not already set
         if relativeStartTime == nil {
             relativeStartTime = item.currentTime()
+
+//            UIView.animateWithDuration(0.25,
+//                                       delay: 0,
+//                                       usingSpringWithDamping: 0.8,
+//                                       initialSpringVelocity: 0.2,
+//                                       options: .CurveEaseInOut,
+//                                       animations: { [unowned self] in
+//                                        let oldFrame = self.waveformView.frame
+//                                        self.waveformView.frame = CGRect(x: oldFrame.minX, y: oldFrame.minY, width: oldFrame.width, height: 80)
+//            }, completion: nil)
         }
 
         guard let panStartTime = relativeStartTime else {
@@ -169,6 +180,16 @@ extension OverlayView {
         // Deal with if the panning has ended
         if recognizer.state == .Ended {
             relativeStartTime = nil
+//            UIView.animateWithDuration(0.25,
+//                                       delay: 0,
+//                                       usingSpringWithDamping: 0.8,
+//                                       initialSpringVelocity: 0.2,
+//                                       options: .CurveEaseInOut,
+//                                       animations: { [unowned self] in
+//                                        let oldFrame = self.waveformView.frame
+//                                        self.waveformView.frame = CGRect(x: oldFrame.minX, y: oldFrame.midY, width: oldFrame.width, height: 1)
+//            }, completion: nil)
+
             performSelector(#selector(hide), withObject: nil, afterDelay: delay)
             if !isPlaying {
                 play()
