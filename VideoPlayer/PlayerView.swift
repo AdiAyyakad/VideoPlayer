@@ -86,7 +86,9 @@ public extension PlayerView {
 
     func addContentURL(url: NSURL) {
 
-        player.replaceCurrentItemWithPlayerItem(AVPlayerItem(URL: url))
+        let item = AVPlayerItem(URL: url)
+        player.replaceCurrentItemWithPlayerItem(item)
+        overlayView.updateAsset(item.asset)
 
     }
 
@@ -111,10 +113,10 @@ public extension PlayerView {
 private extension PlayerView {
 
     /** Shows overlay or pans to specfic location if overlay is already visible */
-    @objc func didTouchOverlay(recognizer: UIGestureRecognizer) {
+    @objc func didTouchOverlay(recognizer: UITapGestureRecognizer) {
 
-        overlayView.isVisible ? overlayView.handlePanGesture(recognizer) : overlayView.show()
-        overlayView.hideWithDelay(delay)
+        overlayView.show()
+        overlayView.hideWithDelay()
 
     }
 

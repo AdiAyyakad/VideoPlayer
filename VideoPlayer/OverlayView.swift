@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import SCWaveformView
 
 class OverlayView: UIView {
 
@@ -18,23 +19,23 @@ class OverlayView: UIView {
     var font: UIFont = .systemFontOfSize(30)
     var delay: Double = 3.0
 
-    private let panGestureRecognizer = UIPanGestureRecognizer()
     private let textLabel = UILabel()
     private let playPauseButton = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: 60, height: 60)))
     private var timerObserver: AnyObject?
     private var waveformObserver: AnyObject?
+    private var relativeStartTime: CMTime? = nil
 
     private var textLabelFrame: CGRect {
         return CGRect(origin: CGPoint(x: 0, y: playPauseButton.frame.maxY+12), size: CGSize(width: bounds.width, height: 30))
     }
-    private var waveformLayerFrame: CGRect {
-        return CGRect(origin: textLabelFrame.origin, size: CGSize(width: bounds.width, height: 80))
+    private var waveformFrame: CGRect {
+        return CGRect(x: 0, y: textLabelFrame.maxY, width: bounds.width, height: 80)
     }
 
     // MARK: - Waveform Properties
 
-    var fillColor: UIColor = .redColor()
-    var waveformLayer = CAShapeLayer()
+    var progressColor: UIColor = .redColor()
+    private var waveformView = SCWaveformView()
     weak var player: AVPlayer?
 
     init() {
@@ -50,17 +51,22 @@ class OverlayView: UIView {
     override func layoutSubviews() {
 
         textLabel.frame = textLabelFrame
-        waveformLayer.frame = waveformLayerFrame
+        waveformView.frame = waveformFrame
 
     }
 
     deinit {
 
-        guard let timerObserver = timerObserver, waveformObserver = waveformObserver else {
+        guard let timerObserver = timerObserver else {
             return
         }
 
         player?.removeTimeObserver(timerObserver)
+
+        guard let waveformObserver = waveformObserver else {
+            return
+        }
+
         player?.removeTimeObserver(waveformObserver)
 
     }
@@ -73,23 +79,24 @@ private extension OverlayView {
 
     func setup() {
 
-        backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.1)
-        hidden = true
+        backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.2)
+        hide()
 
         setupPlayPauseButton()
         setupWaveformView()
         setupTextLabel()
+        setupGestureRecognizers()
 
     }
 
     func setupPlayPauseButton() {
 
-        playPauseButton.tintColor = .whiteColor()
-        changeImage(UIImage(assetIdentifier: .Play))
-
         playPauseButton.center = CGPoint(x: bounds.midX, y: bounds.midY)
         playPauseButton.contentMode = .Center
         playPauseButton.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin, .FlexibleBottomMargin]
+
+        playPauseButton.tintColor = .whiteColor()
+        changeImage(UIImage(assetIdentifier: .Play))
         playPauseButton.userInteractionEnabled = true
 
         addSubview(playPauseButton)
@@ -103,23 +110,26 @@ private extension OverlayView {
         textLabel.font = font
         textLabel.textAlignment = .Center
         textLabel.textColor = .whiteColor()
-        textLabel.frame = textLabelFrame
-        
+
         addSubview(textLabel)
 
     }
 
     func setupWaveformView() {
 
-        waveformLayer.frame = waveformLayerFrame
-        waveformLayer.path = UIBezierPath(rect: CGRect(origin: bounds.origin, size: CGSize(width: 0, height: bounds.height))).CGPath
-        waveformLayer.fillColor = fillColor.CGColor
+        waveformView.lineWidthRatio = 0.5
+        waveformView.normalColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.5)
+        waveformView.progressColor = progressColor.colorWithAlphaComponent(0.5)
 
-        layer.addSublayer(waveformLayer)
-
-        panGestureRecognizer.addTarget(self, action: #selector(handlePanGesture(_:)))
-        addGestureRecognizer(panGestureRecognizer)
+        addSubview(waveformView)
         
+    }
+
+    func setupGestureRecognizers() {
+
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        addGestureRecognizer(panGestureRecognizer)
+
     }
 
 }
@@ -128,27 +138,40 @@ private extension OverlayView {
 
 extension OverlayView {
 
-    @objc func handlePanGesture(recognizer: UIGestureRecognizer) {
+    func handlePanGesture(recognizer: UIPanGestureRecognizer) {
 
         guard let item = player?.currentItem else {
             return
         }
 
+        // set the relative time if not already set
+        if relativeStartTime == nil {
+            relativeStartTime = item.currentTime()
+        }
+
+        guard let panStartTime = relativeStartTime else {
+            return
+        }
+
+        // Deal with the first ever instance of panning
         if isPlaying {
             NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(hide), object: nil)
             pause()
         }
 
         let length = CMTimeGetSeconds(item.duration)
-        let percentMoved = clamp(item: Double(recognizer.locationInView(self).x/bounds.width), low: 0, high: 1)
-        let seconds = percentMoved*length
+        let percentTranslated = Double(recognizer.translationInView(self).x/bounds.width)
+        let seconds = clamp(item: percentTranslated*length + CMTimeGetSeconds(panStartTime), low: 0, high: length)
 
+        // Update views with the seconds
         textLabel.text = String(format: "%d:%02d", Int(seconds)/60, Int(seconds)%60)
-        updateWaveformProgress(CGFloat(percentMoved))
+        updateWaveformProgress(CMTime(seconds: seconds, preferredTimescale: Int32(NSEC_PER_SEC)))
 
         player?.seekToTime(CMTime(seconds: seconds, preferredTimescale: Int32(NSEC_PER_SEC)))
 
+        // Deal with if the panning has ended
         if recognizer.state == .Ended {
+            relativeStartTime = nil
             performSelector(#selector(hide), withObject: nil, afterDelay: delay)
             if !isPlaying {
                 play()
@@ -175,19 +198,17 @@ extension OverlayView {
         hidden = true
     }
 
-    func hideWithDelay(delay: Double) {
+    func hideWithDelay() {
 
-        self.delay = delay
         NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(hide), object: nil)
         performSelector(#selector(hide), withObject: nil, afterDelay: delay)
 
     }
 
-    func updateWaveformProgress(progress: CGFloat) {
+    func updateWaveformProgress(progressTime: CMTime) {
 
-        let path = UIBezierPath(rect: CGRect(origin: .zero, size: CGSize(width: progress*waveformLayerFrame.width, height: waveformLayerFrame.height)))
-        waveformLayer.path = path.CGPath
-        
+        waveformView.progressTime = progressTime
+
     }
 
 }
@@ -206,19 +227,24 @@ extension OverlayView {
         }
 
         waveformObserver = player.addPeriodicTimeObserverForInterval(CMTime(seconds: 0.2, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { (cmtime) in
-            guard let item = self.player?.currentItem else {
-                return
-            }
 
-            self.updateWaveformProgress(CGFloat(CMTimeGetSeconds(cmtime)/CMTimeGetSeconds(item.duration)))
+            self.updateWaveformProgress(cmtime)
         }
+
+    }
+
+    func updateAsset(asset: AVAsset) {
+
+        waveformView.asset = asset
+        waveformView.timeRange = CMTimeRange(start: kCMTimeZero, duration: asset.duration)
+        setNeedsDisplay()
 
     }
 
     func didPressPlayPause() {
 
         isPlaying ? pause() : play()
-        hideWithDelay(delay)
+        hideWithDelay()
 
     }
 
