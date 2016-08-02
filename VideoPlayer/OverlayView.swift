@@ -28,7 +28,7 @@ class OverlayView: UIView {
     private var textLabelFrame: CGRect {
         return CGRect(origin: CGPoint(x: 0, y: playPauseButton.frame.maxY+12), size: CGSize(width: bounds.width, height: 30))
     }
-    private var waveformFrame: CGRect {
+    private var waveformLineFrame: CGRect {
         return CGRect(x: 0, y: textLabelFrame.maxY, width: bounds.width, height: 80)
     }
 
@@ -51,7 +51,7 @@ class OverlayView: UIView {
     override func layoutSubviews() {
 
         textLabel.frame = textLabelFrame
-        waveformView.frame = waveformFrame
+        waveformView.frame = waveformLineFrame
 
     }
 
@@ -113,9 +113,10 @@ private extension OverlayView {
 
     func setupWaveformView() {
 
+        waveformView.precision = 0.5
         waveformView.lineWidthRatio = 0.5
-        waveformView.normalColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.5)
-        waveformView.progressColor = progressColor.colorWithAlphaComponent(0.5)
+        waveformView.normalColor = UIColor.lightGrayColor()
+        waveformView.progressColor = progressColor
 
         addSubview(waveformView)
         
