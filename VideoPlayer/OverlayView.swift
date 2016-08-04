@@ -266,7 +266,13 @@ extension OverlayView {
 
     }
 
-    func play() {
+    func play(reset: Bool = true) {
+        if reset {
+            if let item = player?.currentItem where item.currentTime() == item.duration {
+                player?.seekToTime(CMTime(seconds: 0, preferredTimescale: Int32(NSEC_PER_SEC)))
+            }
+        }
+
         player?.play()
         changeImage(UIImage(assetIdentifier: .Pause))
         isPlaying = true
